@@ -14,20 +14,22 @@ const FormWrapper = styled(Form)`
 `
 
 const LoginForm = ({ setIsLoggedIn }) => {
-    const [id, onChangeId] = useInput("")
-    const [password, onChangePassword] = useInput("")
-    const style = useMemo(() => {
-        marginTop: 10
+    const [id, setId] = useState("")
+    const [password, setPassword] = useState("")
+    const onChangeId = useCallback((e) => {
+        setId(e.target.value)
+    }, [])
+    const onChangePassword = useCallback((e) => {
+        setPassword(e.target.value)
     }, [])
 
     const onSubmitForm = useCallback(() => {
+        console.log(id, password)
         setIsLoggedIn(true)
     }, [id, password])
 
     return (
-        <FormWrapper
-        // onFinish={onSubmitForm}
-        >
+        <FormWrapper onFinish={onSubmitForm}>
             <div>
                 <label htmlFor="user-id">아이디</label>
                 <br />
@@ -36,16 +38,9 @@ const LoginForm = ({ setIsLoggedIn }) => {
             <div>
                 <label htmlFor="user-password">비밀번호</label>
                 <br />
-                <Input
-                    name="user-password"
-                    type="password"
-                    value={password}
-                    onChange={onChangePassword}
-                    required
-                />
+                <Input name="user-password" value={password} onChange={onChangePassword} required />
             </div>
-            {/* 리렌더링 할 때마다 style의 객체가 계속 리렌더링 되므로 style={{}}는 쓰지말자 */}
-            <ButtonWrapper style={style}>
+            <ButtonWrapper>
                 <Button type="primary" htmlType="submit" loading={false}>
                     로그인
                 </Button>

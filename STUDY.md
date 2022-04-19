@@ -7,15 +7,19 @@
  npm i eslint -D
 ```
 
-## \_app.js
+# NEXT JS의 다양한 기능 정리
 
-페이지들의 공통적인 것들을 처리할 수 있는 컴포넌트 파일이다.
+## next js에서 제공하는 유용한 태그
 
-## 유용한 next 컴포넌트
+Head : HTML에서 Head 안에서 title, meta charSet 등 지정하는 것처럼 이 안에 지정해줄 수 있다.
 
 ```
 import Head from "next/head"
 ```
+
+## \_app.js
+
+페이지들의 공통적인 것들을 처리할 수 있는 컴포넌트 파일이다.
 
 ## next에서 웹팩으로 import
 
@@ -115,7 +119,7 @@ const Comp = ()=>{
 ]}>
 ```
 
-2. 레이아웃 축약어 익히기
+2. antd에서 Row, Col 컴포넌트 사용시 쓰는 레이아웃 축약어는 아래와 같으며, 화면을 24분할 하는 것으로 기준을 잡아, 내가 그 중 컨텐츠영역으로 몇 컬럼을 정할건지 입력하여 쓸 수 있다.
 
 -   xs : 모바일(screen < 576px)
 -   sm : 태블릿(screen ≥ 576px)
@@ -123,7 +127,14 @@ const Comp = ()=>{
 -   lg : 데스크탑(screen ≥ 992px)
 -   xl : 큰 데스크탑(screen ≥ 1200px)
 -   xxl : 매우 큰 데스크탑(screen ≥ 1600px)
+-   gutter : 컬럼 사이의 간격
 
-## 꿀팁
+3.  Form 태그로 폼 만들 땐 마지막 버튼 태그에 htmlType='submit'을 붙여줘야 form이 제출되는데, 이때 onFinish가 호출된다. 여기에 기능을 입력할 수 있다.
 
-1. <a> 태그에서 target='\_blank' 속성을 써줬다면 반드시 뒤에 rel='noreferrer noopener' 를 넣어줘야 한다. 이건 하나의 보안장치로서, 새 창을 열었을 때 'referrer'와 'opener'라는 값이 생기는데, 이걸 차단해주는 역할을 한다.
+## 코딩꿀팁
+
+1. a 태그에서 target='\_blank' 속성을 써줬다면 반드시 뒤에 rel='noreferrer noopener' 를 넣어줘야 한다. 이건 하나의 보안장치로서, 새 창을 열었을 때 'referrer'와 'opener'라는 값이 생기는데, 이걸 차단해주는 역할을 한다.
+
+2. css 지식
+
+-   'verticalAlign' : 수직 정렬을 선택하는 것으로, inline과 table-cell에서 쓰인다.

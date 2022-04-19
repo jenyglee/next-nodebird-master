@@ -9,20 +9,17 @@ const UserProfile = ({ setIsLoggedIn }) => {
         <Card
             actions={[
                 <div key="twit">
-                    짹짹
-                    <br />0
+                    짹짹 <br />0
                 </div>,
                 <div key="following">
-                    팔로워
-                    <br />0
+                    팔로잉 <br />0
                 </div>,
-                <div key="twit">
-                    짹짹
-                    <br />0
+                <div key="followers">
+                    팔로워 <br />0
                 </div>,
             ]}
         >
-            <Card.Meta avatar={<Avatar>ZX</Avatar>} title="ZeroCho" />
+            <Card.Meta avatar={<Avatar>ZC</Avatar>} title="ZeroCho" />
             <Button onClick={onLogOut}>로그아웃</Button>
         </Card>
     )

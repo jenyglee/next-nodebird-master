@@ -138,3 +138,61 @@ const Comp = ()=>{
 2. css 지식
 
 -   'verticalAlign' : 수직 정렬을 선택하는 것으로, inline과 table-cell에서 쓰인다.
+
+3. 커스텀 훅
+   반복되는 기능을 하나의 훅으로 만든다. 많은 연습이 필요하다.
+
+```
+(☑️반복되는 기능)
+const [id, setId] = useState('')
+const onChangeId=(e)=>{
+    setId(e.target.value)
+}
+(✅커스텀 훅 전환)
+export default (initialValue = null)=>{
+const [value, setValue] = useState(initialValue)
+const handler = (e) => {
+    setValue(e.target.value)
+}
+return [value, handler]
+}
+
+```
+
+## 리덕스 사용해보자(feat. next-redux-wrapper)
+
+1. store 폴더를 만들고 그안에 configureStore.js를 만든다.
+2. 'next-redux-wrapper', 'redux' 를 설치한다.
+3. configureStore.js 안에 기본 틀을 만들어준다.
+
+```
+(store 기본 틀)
+import { createWrapper } from "next-redux-wrapper"
+const configureStore = ()=>{}
+const wrapper = createWrapper(configureStore)
+export default wrapper;
+```
+
+4. \_app.js에서 export 하는 컴포넌트를 wrapper.withRedux() 👈 이걸로 감싸준다.
+5. 기본 틀로 돌아가서 configureStore 안에 기본 리덕스의 설정들을 넣어준다.
+
+```
+import { createStore } from 'redux';
+const configureStore = ()=>{
+    const store = createStore(reducer);
+    return store;
+}
+```
+
+### 기능정리
+
+-   createWrapper : 스토어를 감싸주는 역할, 2번째 props에 옵션객체가 들어간다.
+-   debug 옵션 : 이 부분이 true면 개발할 때 리덕스에 관해서 더 자세한 설명이 나온다. 개발할때는 true로 맞춰주자.
+
+```
+createWrapper(configureStore, {debug: process.env.NODE_ENV === "development"})
+```
+
+### NEXT 에서 리덕스 사용할 때 차이점!
+
+1. 일반 프로젝트에서 리덕스를 사용하면 맨 상위 컴포넌트(ex. App)에 `<Provider store={store}>` 로 감싸주곤 한다. 하지만 next redux가 6버전 이후부터 알아서 Provider로 감싸주기 시작해서, 따로 넣어주지 않도록 변경됐다.

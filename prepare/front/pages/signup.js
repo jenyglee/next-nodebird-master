@@ -13,7 +13,6 @@ const Signup = () => {
     const [id, onChangeId] = useInput("")
     const [nickname, onChangeNickname] = useInput("")
     const [password, onChangePassword] = useInput("")
-
     const [passwordCheck, setPasswordCheck] = useState("")
     const [passwordError, setPasswordError] = useState(false)
     const onChangePasswordCheck = useCallback(
@@ -39,7 +38,8 @@ const Signup = () => {
         if (!term) {
             return setTermError(true)
         }
-    }, [password, passwordCheck, term])
+        console.log(id, nickname, password)
+    }, [id, nickname, password, passwordCheck, term])
 
     return (
         <AppLayout>

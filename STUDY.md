@@ -184,10 +184,72 @@ const configureStore = ()=>{
 }
 ```
 
+6. reducers 폴더를 만들고 그 안에 index.js를 만들어 기본 틀을 넣어준다. (1. rootReducer, 2. initialState, 3. action(ex. changeNickname))
+
+```
+2️⃣
+const initialState = {
+    name : 'zerocho',
+    age : 27,
+    password : 'babo'
+}
+
+3️⃣
+const changeNickname = ( data ) => {
+    return {
+        type : 'CHANGE_NICKNAME',
+        data,
+    }
+}
+
+1️⃣
+const rootReducer = (state = initialState, action)=>{
+    switch (action.type){
+        case 'CHANGE_NICKNAME' :
+            return {
+                ...state,
+                name : action.data
+            }
+    }
+}
+export default rootReducer
+```
+
+7. configureStore.js에서 reducer를 불러와준다.
+
+```
+import reducer from "../reducers"
+```
+
+8. useSelector를 사용해 실제로 컴포넌트에서 reducer에 있는 데이터를 불러와준다.
+
+```
+import {useSelector} from 'react-redux'
+
+function Comp(){
+    const name = useSelector(state => state.name);
+}
+```
+
+9. reducer에 있는 값을 수정할 때는 useDispatch를 사용한다.
+
+```
+import { useDispatch } from "react-redux"
+import {changeNickname} from "../reducers"
+
+funcion Comp(){
+    const dispatch = useDispatch();
+    dispatch(changeNickname("수정할 이름"))
+}
+```
+
 ### 기능정리
 
 -   createWrapper : 스토어를 감싸주는 역할, 2번째 props에 옵션객체가 들어간다.
 -   debug 옵션 : 이 부분이 true면 개발할 때 리덕스에 관해서 더 자세한 설명이 나온다. 개발할때는 true로 맞춰주자.
+-   action : 어떤 기능을 실행하고 어떤 데이터를 반영할 것인지를 정의한다. action을 dispatch하여 동작시킨다.
+-   reducer : 전역에서 꺼내 쓸 수 있는 데이터를 관리하고, action이 실행시킬 수 있는 기능들을 정의하는 곳.
+-   rootReducer : '이전상태'와 '액션'을 이용해서 '다음상태'를 만들어주는 것
 
 ```
 createWrapper(configureStore, {debug: process.env.NODE_ENV === "development"})

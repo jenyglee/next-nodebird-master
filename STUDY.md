@@ -7,9 +7,9 @@
  npm i eslint -D
 ```
 
-# NEXT JS의 다양한 기능 정리
+## NEXT JS의 다양한 기능 정리
 
-## next js에서 제공하는 유용한 태그
+### next js에서 제공하는 유용한 태그
 
 Head : HTML에서 Head 안에서 title, meta charSet 등 지정하는 것처럼 이 안에 지정해줄 수 있다.
 
@@ -17,11 +17,11 @@ Head : HTML에서 Head 안에서 title, meta charSet 등 지정하는 것처럼 
 import Head from "next/head"
 ```
 
-## \_app.js
+### \_app.js
 
 페이지들의 공통적인 것들을 처리할 수 있는 컴포넌트 파일이다.
 
-## next에서 웹팩으로 import
+### next에서 웹팩으로 import
 
 next 안에는 기본적으로 웹팩이 들어가 있다.
 import는 자바스크립트만 할수 있기 때문에 css는 할 수가 없는데
@@ -33,31 +33,10 @@ import는 자바스크립트만 할수 있기 때문에 css는 할 수가 없는
 import "antd/dist/antd.css"
 ```
 
-## PropTypes 정리
+# HYDRATE 가 무엇일까??
 
-node : 화면에 그릴 수 있는 모든 것들 (return 안에 들어갈 수 있는 모든 것들)
-element : element에서 props로 전달하기 전에 이미 태그로 만들어둔 상태.
-
-```
-<Header props={<Logo />}>
-```
-
-elementType : element에서 props로 전달할 때 import한 컴포넌트 이름만 그대로 집어넣을 때 사용한다.
-
-```
-import Logo from "components/logo"
-<Header props={Logo}>
-```
-
-### proptypes의 다양한 사용처 예시
-
-```
-AppLayout.proptypes = {
-    children : Proptypes.node.isRequire
-    Component: PropTypes.element
-    Component: PropTypes.elementType
-}
-```
+import { HYDRATE } from "next-redux-wrapper"
+리덕스 서버사이드 랜더링을 위해서
 
 ## 컴포넌트에 스타일을 줄 때
 
@@ -210,6 +189,8 @@ const rootReducer = (state = initialState, action)=>{
                 ...state,
                 name : action.data
             }
+        default :
+            return state
     }
 }
 export default rootReducer
@@ -243,18 +224,109 @@ funcion Comp(){
 }
 ```
 
+### (부가) reducer 분리하기
+
+1. 저장소에 있는 state를 'user', 'post' 등 종류에 따라 reducer를 분리하는 작업이 필요하다. reducers 폴더 안에 state 저장소 이름으로 'user.js', 'post.js' 이런식으로 추가해서 index.js안에 있는 initialState, action, switch case를 가져온다. 이때 initialState는 앞에 export를 붙여서 다른 파일에서 가져올 수 있도록 한다.
+2. index.js에는 나뉘어진 파일들을 합쳐주는 작업을 해야하기 때문에 코드를 수정해주자.
+3. redux에서 제공하는 combineReducer을 이용해 rootReducer 안에 switch 기능을 제거하고 분리한 리듀서들을 가져와 감싸준다.
+
+```
+import user from './user';
+import post from './post';
+const rootReducer = combineReducer({
+    user,
+    post
+})
+```
+
+4. case "HYDRATE" 는 어떤 리뷰서에도 포함되지 않는 부분이므로 combineReducer 안에 따로 적어서 넣어줘야 한다.
+
+```
+(reducers/index.js)
+import { HYDRATE } from "next-redux-wrapper"
+...
+const rootReducer = combineReducer({
+    index : (state = {}, action)=>{
+        switch (action.type){
+            case "HYDRATE":
+                return { ...state, ...action.payload }
+        }
+    },
+    user,
+    post
+})
+```
+
 ### 기능정리
 
 -   createWrapper : 스토어를 감싸주는 역할, 2번째 props에 옵션객체가 들어간다.
 -   debug 옵션 : 이 부분이 true면 개발할 때 리덕스에 관해서 더 자세한 설명이 나온다. 개발할때는 true로 맞춰주자.
--   action : 어떤 기능을 실행하고 어떤 데이터를 반영할 것인지를 정의한다. action을 dispatch하여 동작시킨다.
--   reducer : 전역에서 꺼내 쓸 수 있는 데이터를 관리하고, action이 실행시킬 수 있는 기능들을 정의하는 곳.
--   rootReducer : '이전상태'와 '액션'을 이용해서 '다음상태'를 만들어주는 것
 
 ```
 createWrapper(configureStore, {debug: process.env.NODE_ENV === "development"})
 ```
 
+-   action : 어떤 기능을 실행하고 어떤 데이터를 반영할 것인지를 정의한다. action을 dispatch하여 동작시킨다.
+-   reducer : 전역에서 꺼내 쓸 수 있는 데이터를 관리하고, action이 실행시킬 수 있는 기능들을 정의하는 곳.
+-   rootReducer : '이전상태'와 '액션'을 이용해서 '다음상태'를 만들어주는 것
+
+### 리덕스 기능확장
+
+-   (용어) middleware : 응용프로그램과 그 프로그램이 운영되는 환경 간에 원만한 통신이 이루어질 수 있게 하는 소프트웨어
+-   enhancer : 확장할 기능이 들어있는 변수로, (configureStore.js) createStore 두번째 인자에 enhancer를 넣는다.
+    composeWithDevTools : 'redux-devtools-extension' 라이브러리 기능으로, 브라우저 리덕스 개발자 도구랑 연동할 수 있도록 해준다. 이 기능을 연동하면 크롬 redux devtools 개발자도구에서 리덕스 작동되는 것을 볼 수 있게된다.
+
+```
+import { applyMiddleware, compose, createStore } from "redux"
+import { composeWithDevTools } from 'redux-devtools-extension'
+import reducers from '../reducers'
+
+const configureStore = ()=>{
+    const middlewares = [];
+    const enhancer = process.env.NODE_ENV === 'production'
+    ? compose(applyMiddlware(...middlewares)) 👉 배포용에선 DevTools 연결해제
+    : composeWithDevTools(applyMiddlware(...middlewares)) 👉 개발용에선 DevTools 연결
+    const store = createStore(reducers, enhancer)
+    return store;
+}
+```
+
 ### NEXT 에서 리덕스 사용할 때 차이점!
 
 1. 일반 프로젝트에서 리덕스를 사용하면 맨 상위 컴포넌트(ex. App)에 `<Provider store={store}>` 로 감싸주곤 한다. 하지만 next redux가 6버전 이후부터 알아서 Provider로 감싸주기 시작해서, 따로 넣어주지 않도록 변경됐다.
+
+## React, Next 기능들
+
+### element vs elementType
+
+-   node : 화면에 그릴 수 있는 모든 것들 (return 안에 들어갈 수 있는 모든 것들)
+-   element : element에서 props로 전달하기 전에 이미 태그로 만들어둔 상태.
+
+```
+<Header props={<Logo />}> 👉 element
+```
+
+-   elementType : element에서 props로 전달할 때 import한 컴포넌트 이름만 그대로 집어넣을 때 사용한다.
+
+```
+import Logo from "components/logo"
+<Header props={Logo}> 👉 elementType
+```
+
+PropTypes 정리
+
+node, element, elementType, array ,func, string, bool
+isRequired
+
+```
+AppLayout.proptypes = {
+    children : Proptypes.node
+    Component: PropTypes.element
+    Component: PropTypes.elementType
+    data: PropTypes.array,
+    onClickRow: PropTypes.func,
+    orderBy: PropTypes.string,
+    order: PropTypes.bool,
+    order: PropTypes.bool.isRequired,
+}
+```

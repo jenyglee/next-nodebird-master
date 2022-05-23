@@ -21,6 +21,7 @@
         "react-dom": "^16.9.0",
         "react-redux": "^8.0.1",
         "redux": "^4.2.0",
+        "redux-devtools-extension": "^2.13.9",
         "styled-components": "^5.3.3"
     },
     "devDependencies": {

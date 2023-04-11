@@ -18,8 +18,24 @@ export const initialState = {
                     src: "https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.pinimg.com%2F736x%2F74%2F1c%2Fcc%2F741ccc39becefdadeb1e6d1068e84976.jpg&type=sc960_832",
                 },
             ],
+            Comment: [
+                {
+                    User: {
+                        nickname: "nero",
+                    },
+                    content: "우와 개정판!",
+                },
+                {
+                    User: {
+                        nickname: "hero",
+                    },
+                    content: "사고싶어용!",
+                },
+            ],
         },
     ],
+    imagePaths: [],
+    postAdded: false,
 }
 
 const reducer = (state = initialState, action) => {

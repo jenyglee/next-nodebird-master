@@ -8,7 +8,7 @@ const configureStore = () => {
     const enhancer =
         process.env.NODE_ENV === "production"
             ? compose(applyMiddleware(...middlewares))
-            : composeWithDevTools(applyMiddleware(...middlewares))
+            : composeWithDevTools(applyMiddleware(...middlewares)) // 개발자모드에서 DevTools 사용 세팅한다.
     const store = createStore(reducer, enhancer)
     return store
 }

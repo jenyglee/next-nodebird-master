@@ -6,7 +6,7 @@ export const initialState = {
                 id: 1,
                 nickname: "이재원",
             },
-            content: "이재원짱짱맨걸",
+            content: "첫번째 게시글 #해시태그",
             Images: [
                 {
                     src: "https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.pinimg.com%2F736x%2Fad%2Fcd%2F5d%2Fadcd5dd4ca610b47802b81392a8dbff6.jpg&type=sc960_832",

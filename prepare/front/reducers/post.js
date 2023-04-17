@@ -6,7 +6,7 @@ export const initialState = {
                 id: 1,
                 nickname: "이재원",
             },
-            content: "첫번째 게시글 #해시태그",
+            content: "이재원짱짱맨걸",
             Images: [
                 {
                     src: "https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.pinimg.com%2F736x%2Fad%2Fcd%2F5d%2Fadcd5dd4ca610b47802b81392a8dbff6.jpg&type=sc960_832",
@@ -18,7 +18,7 @@ export const initialState = {
                     src: "https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.pinimg.com%2F736x%2F74%2F1c%2Fcc%2F741ccc39becefdadeb1e6d1068e84976.jpg&type=sc960_832",
                 },
             ],
-            Comments: [
+            Comment: [
                 {
                     User: {
                         nickname: "nero",
@@ -34,8 +34,8 @@ export const initialState = {
             ],
         },
     ],
-    imagePaths: [], // 이미지 업로드 할 때 경로
-    postAdded: false, // 게시글 추가가 완료되었을 때 true로 변환
+    imagePaths: [], // 이미지 업로드할때 경로가 들어감
+    postAdded: false, // 게시글 추가가 만료되었을 때
 }
 
 const ADD_POST = "ADD_POST"
@@ -43,26 +43,8 @@ export const addPost = {
     type: ADD_POST,
 }
 
-const dummyPost = {
-    id: 2,
-    content: "더미데이터입니다.",
-    User: {
-        id: 1,
-        nickname: "이재원",
-    },
-    Images: [],
-    Comments: [],
-}
-
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case ADD_POST:
-            return {
-                ...state,
-                mainPosts: [dummyPost, ...state.mainPosts],
-                postAdded: true,
-            }
-
         default:
             return state
     }

@@ -12,6 +12,7 @@ function* login(action) {
         yield put({
             type: "LOG_IN_SUCCESS",
             // data: result.data,
+            data: action.data // 백엔드에서 API 만들어지면 위에걸로 변경
         })
     } catch (err) {
         yield put({

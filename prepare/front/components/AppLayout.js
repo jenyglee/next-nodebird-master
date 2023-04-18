@@ -25,7 +25,7 @@ const Global = createGlobalStyle`
 `
 
 const AppLayout = ({ children }) => {
-    const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
+    const { me } = useSelector((state) => state.user)
 
     return (
         <div>
@@ -54,7 +54,7 @@ const AppLayout = ({ children }) => {
                 {/* xs : 모바일(screen < 576px), sm : 태블릿(screen ≥ 576px), md : 작은 데스크탑(screen ≥ 768px) */}
                 {/* lg : 데스크탑(screen ≥ 992px), xl : 큰 데스크탑(screen ≥ 1200px), xxl : 매우 큰 데스크탑(screen ≥ 1600px) */}
                 <Col xs={24} md={6}>
-                    {isLoggedIn ? <UserProfile /> : <LoginForm />}
+                    {me ? <UserProfile /> : <LoginForm />}
                 </Col>
                 <Col xs={24} md={12}>
                     {children}

@@ -1,4 +1,5 @@
 {
+    "parser": "babel-eslint",
     "parserOptions": {
         "ecmaVersion": 2020,
         "sourceType": "module",
@@ -11,9 +12,33 @@
         "node": true,
         "es6": true
     },
-    "extends": ["eslint:recommended", "plugin:react/recommended"],
-    "plugins": ["import", "react", "react-hooks"],
+    "extends": ["airbnb"],
+    "plugins": ["import", "react-hooks"],
     "rules": {
-        "react/jsx-no-undef": "error"
+        // "jsx-a11y/label-has-associated-control": "off",
+        // "jsx-a11y/anchor-is-valid": "off",
+        // "no-console": "off",
+        // "no-underscore-dangle": "off",
+        // "react/forbid-prop-types": "off",
+        // "react/jsx-filename-extension": "off",
+        // "react/jsx-one-expression-per-line": "off",
+        // "object-curly-newline": "off",
+        // "linebreak-style": "off",
+        // "no-param-reassign": "off",
+        // "no-undef": "error",
+        // "react/jsx-no-undef": "error",
+        // "react/function-component-definition": "off",
+        // 모든 코드에 대해 적용되는 규칙
+        "indent": ["error", 4],
+        "overrides": [
+            {
+                // JS 파일에서 JSX 코드에 대해 적용될 규칙
+                "files": ["*.js"],
+                "rules": {
+                    "react/jsx-indent": ["error", 8]
+                }
+            }
+        ],
+        "quotes": "off"
     }
 }

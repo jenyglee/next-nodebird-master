@@ -1,26 +1,28 @@
-import React from "react"
-import { Form, Input, Button } from "antd"
-import { useDispatch, useSelector } from "react-redux"
-import { useState, useCallback, useRef } from "react"
-import { addPost } from "../reducers/post"
+import React, { useEffect, useCallback, useRef } from "react";
+import { Form, Input, Button } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { addPost } from "../reducers/post";
+import useInput from "./hooks/useInput";
 
 const PostForm = () => {
-    const { imagePaths } = useSelector((state) => state.post)
-    const dispatch = useDispatch()
-    const [text, setText] = useState("")
-    const imageInput = useRef()
+    const { imagePaths, addPostDone } = useSelector((state) => state.post);
+    const dispatch = useDispatch();
+    const [text, onChangeText, setText] = useInput("");
+    const imageInput = useRef();
 
-    const onChangeText = useCallback((e) => {
-        setText(e.target.value)
-    }, [])
+    useEffect(() => {
+        if (addPostDone) {
+            setText("");
+        }
+    }, [addPostDone]);
 
     const onClickImageUpload = useCallback(() => {
-        imageInput.current.click()
-    }, [imageInput.current])
+        imageInput.current.click();
+    }, [imageInput.current]);
 
     const onSubmit = useCallback(() => {
-        dispatch(addPost)
-    }, [])
+        dispatch(addPost(text));
+    }, [text]);
 
     return (
         <Form style={{ margin: "10px 0 20px" }} encType="multipart/form-data" onFinish={onSubmit}>
@@ -46,11 +48,11 @@ const PostForm = () => {
                                 <Button>제거</Button>
                             </div>
                         </div>
-                    )
+                    );
                 })}
             </div>
         </Form>
-    )
-}
+    );
+};
 
-export default PostForm
+export default PostForm;

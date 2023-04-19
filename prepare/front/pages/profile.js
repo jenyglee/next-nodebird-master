@@ -1,18 +1,18 @@
-import React, { useEffect } from "react";
-import Router from "next/router";
-import AppLayout from "./../components/AppLayout";
-import Head from "next/head";
-import NicknameEditForm from "../components/NicknameEditForm";
-import FollowList from "../components/FollowList";
-import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
+import React, { useEffect } from 'react';
+import Router from 'next/router';
+import AppLayout from './../components/AppLayout';
+import Head from 'next/head';
+import NicknameEditForm from '../components/NicknameEditForm';
+import FollowList from '../components/FollowList';
+import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 const Profile = () => {
-    const { me } = useSelector((state) => state.user);
+    const { me } = useSelector(state => state.user);
 
     useEffect(() => {
         if (!(me && me.id)) {
-            Router.push("/");
+            Router.push('/');
         }
     }, [me && me.id]);
 

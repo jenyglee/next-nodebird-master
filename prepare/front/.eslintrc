@@ -1,3 +1,18 @@
+// {
+//     "env": {
+//         "browser": true,
+//         "es6": true,
+//         "node": true
+//     },
+//     "extends": ["eslint:recommended", "airbnb", "plugin:prettier/recommended"],
+//     "rules": {
+//         "react/jsx-filename-extension": [
+//             "error",
+//             { "extensions": [".js", ".jsx"] }
+//         ]
+//     }
+// }
+
 {
     "parser": "babel-eslint",
     "parserOptions": {
@@ -15,30 +30,36 @@
     "extends": ["airbnb"],
     "plugins": ["import", "react-hooks"],
     "rules": {
-        // "jsx-a11y/label-has-associated-control": "off",
-        // "jsx-a11y/anchor-is-valid": "off",
-        // "no-console": "off",
-        // "no-underscore-dangle": "off",
-        // "react/forbid-prop-types": "off",
-        // "react/jsx-filename-extension": "off",
-        // "react/jsx-one-expression-per-line": "off",
-        // "object-curly-newline": "off",
-        // "linebreak-style": "off",
-        // "no-param-reassign": "off",
-        // "no-undef": "error",
-        // "react/jsx-no-undef": "error",
-        // "react/function-component-definition": "off",
+        "jsx-a11y/label-has-associated-control": "off",
+        "jsx-a11y/anchor-is-valid": "off",
+        "no-console": "off",
+        "no-underscore-dangle": "off",
+        "react/forbid-prop-types": "off",
+        "react/jsx-filename-extension": "off",
+        "react/jsx-one-expression-per-line": "off",
+        "object-curly-newline": "off",
+        "linebreak-style": "off",
+        "no-param-reassign": "off",
+        "no-undef": "error",
+        "react/jsx-no-undef": "error",
+        "react/function-component-definition": "off",
         // 모든 코드에 대해 적용되는 규칙
         "indent": ["error", 4],
-        "overrides": [
-            {
-                // JS 파일에서 JSX 코드에 대해 적용될 규칙
-                "files": ["*.js"],
-                "rules": {
-                    "react/jsx-indent": ["error", 8]
-                }
-            }
-        ],
+        "import/order": "off",
+        "import/no-useless-path-segments": "off",
+        "arrow-parens": "off",
+        "react/jsx-indent": "off",
+        "react/jsx-indent-props": "off",
+        "react/jsx-wrap-multilines": "off",
+        // "overrides": [
+        //     {
+        //         // JS 파일에서 JSX 코드에 대해 적용될 규칙
+        //         "files": ["*.js"],
+        //         "rules": {
+        //             "react/jsx-indent": ["error", 8]
+        //         }
+        //     }
+        // ],
         "quotes": "off"
     }
 }

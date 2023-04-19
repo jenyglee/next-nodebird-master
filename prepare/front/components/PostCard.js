@@ -1,22 +1,23 @@
-import React, { useCallback, useState } from "react";
-import { Button, Card, Popover, Avatar, List, Comment } from "antd";
-import PropTypes from "prop-types";
+import React, { useCallback, useState } from 'react';
+import { Button, Card, Popover, Avatar, List, Comment } from 'antd';
+import PropTypes from 'prop-types';
 import {
     RetweetOutlined,
     HeartOutlined,
     MessageOutlined,
     EllipsisOutlined,
     HeartTwoTone,
-} from "@ant-design/icons";
-import ButtonGroup from "antd/lib/button/button-group";
-import { useDispatch, useSelector } from "react-redux";
-import PostImages from "./PostImages";
-import CommentForm from "./CommentForm";
-import PostCardContent from "./PostCardContent";
-import { REMOVE_POST_REQUEST } from "../reducers/post";
+} from '@ant-design/icons';
+import ButtonGroup from 'antd/lib/button/button-group';
+import { useDispatch, useSelector } from 'react-redux';
+import PostImages from './PostImages';
+import CommentForm from './CommentForm';
+import PostCardContent from './PostCardContent';
+import { REMOVE_POST_REQUEST } from '../reducers/post';
 
 const PostCard = ({ post }) => {
     const dispatch = useDispatch();
+
     const [liked, setLiked] = useState(false);
     const [commentFormOpened, setCommentFormOpened] = useState(false);
     const { removePostLoading } = useSelector((state) => state.post);
@@ -44,7 +45,11 @@ const PostCard = ({ post }) => {
                 actions={[
                     <RetweetOutlined key="retweet" />,
                     liked ? (
-                        <HeartTwoTone key="heart" twoToneColor="#eb2f96" onClick={onToggleLike} />
+                        <HeartTwoTone
+                            key="heart"
+                            twoToneColor="#eb2f96"
+                            onClick={onToggleLike}
+                        />
                     ) : (
                         <HeartOutlined key="heart" onClick={onToggleLike} />
                     ),
@@ -91,12 +96,14 @@ const PostCard = ({ post }) => {
                             <li>
                                 <Comment
                                     author={item.User.nickname}
-                                    avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
+                                    avatar={
+                                        <Avatar>{item.User.nickname[0]}</Avatar>
+                                    }
                                     content={item.content}
                                 />
                             </li>
                         )}
-                    ></List>
+                    />
                 </>
             )}
         </div>

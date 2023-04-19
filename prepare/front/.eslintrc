@@ -44,13 +44,18 @@
         "react/jsx-no-undef": "error",
         "react/function-component-definition": "off",
         // 모든 코드에 대해 적용되는 규칙
-        "indent": ["error", 4],
+        "indent": "off",
+        "max-len": "off",
+        "no-unused-vars": "off",
         "import/order": "off",
         "import/no-useless-path-segments": "off",
         "arrow-parens": "off",
         "react/jsx-indent": "off",
         "react/jsx-indent-props": "off",
         "react/jsx-wrap-multilines": "off",
+        "default-param-last": "off",
+        "implicit-arrow-linebreak": "off",
+        "operator-linebreak": "off",
         // "overrides": [
         //     {
         //         // JS 파일에서 JSX 코드에 대해 적용될 규칙

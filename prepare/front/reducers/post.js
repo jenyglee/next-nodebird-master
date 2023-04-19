@@ -1,6 +1,6 @@
-import shortId from "shortid";
-import produce from "immer";
-import { faker } from "@faker-js/faker";
+import shortId from 'shortid';
+import produce from 'immer';
+import { faker } from '@faker-js/faker';
 
 export const initialState = {
     mainPosts: [],
@@ -47,23 +47,23 @@ export const generateDummyPost = (number) =>
             ],
         }));
 
-initialState.mainPosts = initialState.mainPosts.concat(generateDummyPost(10));
+// initialState.mainPosts = initialState.mainPosts.concat(generateDummyPost(10));
 
-export const LOAD_POSTS_REQUEST = "LOAD_POSTS_REQUEST";
-export const LOAD_POSTS_SUCCESS = "LOAD_POSTS_SUCCESS";
-export const LOAD_POSTS_FAILURE = "LOAD_POSTS_FAILURE";
+export const LOAD_POSTS_REQUEST = 'LOAD_POSTS_REQUEST';
+export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';
+export const LOAD_POSTS_FAILURE = 'LOAD_POSTS_FAILURE';
 
-export const ADD_POST_REQUEST = "ADD_POST_REQUEST";
-export const ADD_POST_SUCCESS = "ADD_POST_SUCCESS";
-export const ADD_POST_FAILURE = "ADD_POST_FAILURE";
+export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
+export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
+export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
 
-export const REMOVE_POST_REQUEST = "REMOVE_POST_REQUEST";
-export const REMOVE_POST_SUCCESS = "REMOVE_POST_SUCCESS";
-export const REMOVE_POST_FAILURE = "REMOVE_POST_FAILURE";
+export const REMOVE_POST_REQUEST = 'REMOVE_POST_REQUEST';
+export const REMOVE_POST_SUCCESS = 'REMOVE_POST_SUCCESS';
+export const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
 
-export const ADD_COMMENT_REQUEST = "ADD_COMMENT_REQUEST";
-export const ADD_COMMENT_SUCCESS = "ADD_COMMENT_SUCCESS";
-export const ADD_COMMENT_FAILURE = "ADD_COMMENT_FAILURE";
+export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
+export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
+export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
 
 export const addPost = (data) => ({
     type: ADD_POST_REQUEST,
@@ -79,7 +79,7 @@ const dummyPost = (data) => ({
     content: data.content,
     User: {
         id: 1,
-        nickname: "제로초",
+        nickname: '제로초',
     },
     Images: [],
     Comments: [],
@@ -90,7 +90,7 @@ const dummyComment = (data) => ({
     content: data,
     User: {
         id: 1,
-        nickname: "제로초",
+        nickname: '제로초',
     },
 });
 
@@ -146,7 +146,9 @@ const reducer = (state = initialState, action) =>
             case REMOVE_POST_SUCCESS:
                 draft.removePostLoading = false;
                 draft.removePostDone = true;
-                draft.mainPosts = draft.mainPosts.filter((v) => v.id !== action.data);
+                draft.mainPosts = draft.mainPosts.filter(
+                    (v) => v.id !== action.data,
+                );
                 break;
             case REMOVE_POST_FAILURE:
                 draft.removePostLoading = false;
@@ -158,7 +160,9 @@ const reducer = (state = initialState, action) =>
                 draft.addCommentError = null;
                 break;
             case ADD_COMMENT_SUCCESS: {
-                const post = draft.mainPosts.find((v) => v.id === action.data.postId);
+                const post = draft.mainPosts.find(
+                    (v) => v.id === action.data.postId,
+                );
                 post.Comments.unshift(dummyComment(action.data.content));
                 draft.addCommentLoading = false;
                 draft.addCommentDone = true;

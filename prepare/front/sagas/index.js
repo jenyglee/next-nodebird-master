@@ -1,6 +1,6 @@
-import { all, fork } from "redux-saga/effects"
-import postSaga from "./post"
-import userSaga from "./user"
+import { all, fork } from 'redux-saga/effects';
+import postSaga from './post';
+import userSaga from './user';
 
 // // 통신 API 호출 함수는 generate 함수가 아니다.
 // function loginAPI(data) {
@@ -89,5 +89,5 @@ import userSaga from "./user"
 
 export default function* rootSaga() {
     // 1. all : fork나 call로 실행하는 것들을 동시에 전부 실행할 수 있게 해준다.
-    yield all([fork(postSaga), fork(userSaga)])
+    yield all([fork(postSaga), fork(userSaga)]);
 }

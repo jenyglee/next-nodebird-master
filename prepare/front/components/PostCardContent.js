@@ -1,6 +1,6 @@
-import React from "react"
-import Link from "next/link"
-import PropTypes from "prop-types"
+import React from 'react';
+import Link from 'next/link';
+import PropTypes from 'prop-types';
 
 const PostCardContent = ({ postData }) => (
     <div>
@@ -10,13 +10,13 @@ const PostCardContent = ({ postData }) => (
                     <Link href={`/hashtag/${v.slice(1)}`} key={i}>
                         <a>{v}</a>
                     </Link>
-                )
+                );
             }
-            return v
+            return v;
         })}
     </div>
-)
+);
 
-PostCardContent.propTypes = { postData: PropTypes.string.isRequired }
+PostCardContent.propTypes = { postData: PropTypes.string.isRequired };
 
-export default PostCardContent
+export default PostCardContent;

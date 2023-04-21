@@ -1,11 +1,10 @@
-import React from "react";
-import { Button, Form, Input } from "antd";
-import Link from "next/link";
-import { useCallback } from "react";
-import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import { loginRequestAction } from "../reducers/user";
-import useInput from "./hooks/useInput";
+import React, { useCallback } from 'react';
+import { Button, Form, Input } from 'antd';
+import Link from 'next/link';
+import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginRequestAction } from '../reducers/user';
+import useInput from './hooks/useInput';
 
 const ButtonWrapper = styled.div`
     margin-top: 10px;
@@ -18,8 +17,8 @@ const FormWrapper = styled(Form)`
 const LoginForm = () => {
     const dispatch = useDispatch();
     const { loginLoading } = useSelector((state) => state.user);
-    const [email, onChangeEmail] = useInput("");
-    const [password, onChangePassword] = useInput("");
+    const [email, onChangeEmail] = useInput('');
+    const [password, onChangePassword] = useInput('');
 
     const onSubmitForm = useCallback(() => {
         console.log(email, password);
@@ -42,7 +41,12 @@ const LoginForm = () => {
             <div>
                 <label htmlFor="user-password">비밀번호</label>
                 <br />
-                <Input name="user-password" value={password} onChange={onChangePassword} required />
+                <Input
+                    name="user-password"
+                    value={password}
+                    onChange={onChangePassword}
+                    required
+                />
             </div>
             <ButtonWrapper>
                 <Button type="primary" htmlType="submit" loading={loginLoading}>

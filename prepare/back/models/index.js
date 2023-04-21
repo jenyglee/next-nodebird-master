@@ -1,43 +1,28 @@
-'use strict';
+const Sequelize = require("sequelize")
 
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-const process = require('process');
-const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
-const db = {};
+// 1. 개발환경을 기본값인 development 로 설정한다.
+const env = process.env.NODE_ENV || "development"
+// 2. 데이터베이스 설정했던 config 파일의 "development" 설정을 가져온다.
+const config = require("../config/config.json")[env] // ([env]는 "development")
+// 3. db 에 빈객체를 일단 생성한다.
+const db = {}
 
-let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
+// 4. 시퀄라이즈에 config(설정)에 있는 데이터베이스명, 유저네임, 패스워드를 가져와서 등록한다.
+const sequelize = new Sequelize(config.database, config.username, config.password, config)
 
-fs
-  .readdirSync(__dirname)
-  .filter(file => {
-    return (
-      file.indexOf('.') !== 0 &&
-      file !== basename &&
-      file.slice(-3) === '.js' &&
-      file.indexOf('.test.js') === -1
-    );
-  })
-  .forEach(file => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-    db[model.name] = model;
-  });
+// 👆
+// 여기까지 시퀄라이즈가 node와 mySQL을 연결해주는 과정이다.
+// 연결이 성공하면 시퀄라이즈 객체에 연결 정보가 담겨있다.
 
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
+// 이제 테이블을 만들어줘야 한다.
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+Object.keys(db).forEach((modelName) => {
+    if (db[modelName].associate) {
+        db[modelName].associate(db)
+    }
+})
 
-module.exports = db;
+db.sequelize = sequelize
+db.Sequelize = Sequelize
+
+module.exports = db

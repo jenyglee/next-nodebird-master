@@ -14,8 +14,19 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 // 여기까지 시퀄라이즈가 node와 mySQL을 연결해주는 과정이다.
 // 연결이 성공하면 시퀄라이즈 객체에 연결 정보가 담겨있다.
 
-// 이제 테이블을 만들어줘야 한다.
+// 이제 테이블을 만들어준 뒤 이어서 연결을 해준다.
+// ====================
+// comment.js를 보면
+// module.export = (sequelize, DataTypes) => {} 👈 이런 형태이다.
+// 저 매개변수 자리에 sequelize, Sequelize를 집어넣어주면 👇 코드가 만들어진다.
+db.Comment = require("./comment")(sequelize, Sequelize)
+db.Hashtag = require("./hashtag")(sequelize, Sequelize)
+db.Image = require("./image ")(sequelize, Sequelize)
+db.Post = require("./post")(sequelize, Sequelize)
+db.User = require("./user")(sequelize, Sequelize)
+// ====================
 
+// 👇 각 테이블의 associate 부분을 연결시켜준다.(관계 맺는부분)
 Object.keys(db).forEach((modelName) => {
     if (db[modelName].associate) {
         db[modelName].associate(db)

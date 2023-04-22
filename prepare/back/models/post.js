@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
         db.Post.hasMany(db.Image)
         db.Post.belongsToMany(db.Hashtag)
         db.Post.belongsToMany(db.User, { through: "Like", as: "Likers" }) // Post는 여러 유저의 좋아요를 받을 수 있다.
-        db.Post.belongsTo(db.Post, { as: "Retweet" }) // Post는 다른 Post의 리트윗일 수 있다.
+        db.Post.belongsTo(db.Post, { as: "Retweet" }) // Post는 다른 Post의 리트윗일 수 있다. 원본 Post를 여러 Post가 리트윗 할 수 있다.(1:N)
     }
     return Post
 }

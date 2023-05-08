@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 const Profile = () => {
-    const { me } = useSelector(state => state.user);
+    const { me } = useSelector((state) => state.user);
 
     useEffect(() => {
         if (!(me && me.id)) {
